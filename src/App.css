@@ -1,38 +1,33 @@
-.App {
-  text-align: center;
+:root {
+	/* CSS variabler, för att undvika att upprepa värden */
+	--primary-fg: #281405;
+	--primary-bg: #F5DDCA;
+	--list-bg: #DC9761;
+	--list-bg-alternate: #EBBA95;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+	margin: 0em;
+	padding: 1em;
+	background-color: var(--primary-bg);
+	color: var(--primary-fg);
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1, h2 {
+	margin: 0em;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.list {
+	border: 1px solid var(--primary-fg);
+	margin: 0.5em;
+	padding: 0em;
 }
-
-.App-link {
-  color: #61dafb;
+/* em är relativ till aktuell teckenstorlek (font-size) */
+/* px är absolut */
+.list > li {
+	list-style-type: none;
+	margin: 0em;
+	padding: 0.5em;
+	background-color: var(--list-bg);
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.list > li:nth-child(odd) {
+	background-color: var(--list-bg-alternate);
 }
