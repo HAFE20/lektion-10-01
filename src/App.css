@@ -27,7 +27,17 @@ h1, h2 {
 	margin: 0em;
 	padding: 0.5em;
 	background-color: var(--list-bg);
+	display: flex;
+	flex-direction: row;
 }
 .list > li:nth-child(odd) {
 	background-color: var(--list-bg-alternate);
+}
+
+.list > li > span:first-child {
+	flex-grow: 1;
+}
+.list > li > span:last-child:hover {
+	cursor: pointer;
+	/* Tips! Använd transform: scale och transition för att göra så att papperskorgen växer */
 }
