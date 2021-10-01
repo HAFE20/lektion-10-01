@@ -21,6 +21,29 @@ const AnimalInfo = () => {
 		{ name: 'Cat', id: '129' },
 		{ name: 'Manul', id: '130' }
 	])
+	const [newAnimalName, setNewAnimalName] = useState<string>('')
+	const [newAnimalId, setNewAnimalId] = useState<string>('')
+
+
+	// Validering av input
+	// - tom sträng är inte okej
+	// - inte lägga till samma djur två gånger
+	const nameIsValid = newAnimalName !== '' && !animals.find(animal => animal.name === newAnimalName)
+
+	const idIsValid = newAnimalId !== '' && !animals.find(animal => animal.id === newAnimalId)
+
+	const canAddAnimal = nameIsValid && idIsValid
+	// Att göra: ge visuell återkoppling till användaren
+	// - grön ram runt fält med godkända värden
+	// - röd ram runt fält med icke godkända värden
+
+
+	// Strategi för att ändra ett värde i en lista
+	// - användaren klickar på texten, ikon för en penna, t.ex...
+	// - byt ut texten mot ett input-fält
+	// - när användaren är färdig, uppdatera state-variabeln
+
+
 
 	// Funktioner för att interagera med appen
 	const removeAnimal = (id: string): void => {
@@ -29,7 +52,16 @@ const AnimalInfo = () => {
 		setAnimals(newArray)
 	}
 
-	// Tips: använd spread operator för att kopiera en lista
+	const addAnimal = (name: string, id: string): void => {
+		// Använd spread operator för att kopiera en lista
+		// array.push ändrar en befintlig lista, använd inte den med React
+		const newAnimal = { name, id }
+		const newArray = [ ...animals, newAnimal ]
+		setAnimals(newArray)
+
+		// Använd en "oneliner" om du känner dig bekväm med det
+		// setAnimals([ ...animals, { name, id } ])
+	}
 
 	/* Använd fragment om det inte finns ett naturligt (semantiskt) element att lägga innehållet i: <> */
 	return (
@@ -44,8 +76,16 @@ const AnimalInfo = () => {
 			))}
 		</ul>
 		<div>
-			TODO: möjlighet att lägga till ett nytt element sist i listan
-			<input type="text" />
+			<input type="text" placeholder="Animal name"
+				value={newAnimalName}
+				onChange={event => setNewAnimalName(event.target.value)}
+				/>
+			<input type="text" placeholder="Animal id"
+				value={newAnimalId}
+				onChange={event => setNewAnimalId(event.target.value)}
+				/>
+			<button disabled={!canAddAnimal}
+				onClick={() => addAnimal(newAnimalName, newAnimalId)}> Add new animal </button>
 		</div>
 		</section>
 	)
