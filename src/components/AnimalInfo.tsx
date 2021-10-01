@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './AnimalInfo.css'
 
 interface Animal {
 	name: string;
@@ -12,17 +13,19 @@ const AnimalInfo = () => {
 
 	*/
 	const [animals, setAnimals] = useState<Animal[]>([
-		{ name: 'Panther', id: '123' },
-		{ name: 'Dog', id: '124' },
-		{ name: 'Otter', id: '125' },
-		{ name: 'Leopard', id: '126' },
-		{ name: 'Horse', id: '127' },
-		{ name: 'Sheep', id: '128' },
-		{ name: 'Cat', id: '129' },
-		{ name: 'Manul', id: '130' }
+		{ name: 'Panther', id: 'a123' },
+		{ name: 'Dog', id: 'a124' },
+		{ name: 'Otter', id: 'a125' },
+		{ name: 'Leopard', id: 'a126' },
+		{ name: 'Horse', id: 'a127' },
+		{ name: 'Sheep', id: 'a128' },
+		{ name: 'Cat', id: 'a129' },
+		{ name: 'Manul', id: 'a130' }
 	])
 	const [newAnimalName, setNewAnimalName] = useState<string>('')
 	const [newAnimalId, setNewAnimalId] = useState<string>('')
+	const [editingAnimalId, setEditingAnimalId] = useState<string>('')
+	const [editingName, setEditingName] = useState<string>('')
 
 
 	// Validering av input
@@ -33,9 +36,12 @@ const AnimalInfo = () => {
 	const idIsValid = newAnimalId !== '' && !animals.find(animal => animal.id === newAnimalId)
 
 	const canAddAnimal = nameIsValid && idIsValid
+
+	const idValidationClass = idIsValid ? 'valid' : 'invalid'
 	// Att göra: ge visuell återkoppling till användaren
 	// - grön ram runt fält med godkända värden
 	// - röd ram runt fält med icke godkända värden
+	// Använd en state-variabel för att kontrollera om användaren "touchat" fältet. Visa inte rött/grönt förrän man touchat fältet.
 
 
 	// Strategi för att ändra ett värde i en lista
@@ -63,24 +69,55 @@ const AnimalInfo = () => {
 		// setAnimals([ ...animals, { name, id } ])
 	}
 
+	const editAnimal = (animal: Animal): void => {
+		if( editingAnimalId === animal.id ) {
+			// ta bort input
+			setEditingAnimalId('')
+			const newArray = animals.map(a => {
+				if( animal.id === a.id ) {
+					// id på objektet som ska ändras - returnera ett nytt objekt
+					return { ...a, name: editingName }
+				} else {
+					// returnera objektet oförändrat
+					return a
+				}
+			})
+			setAnimals(newArray)
+		} else {
+			// visa input
+			setEditingAnimalId(animal.id)
+			setEditingName(animal.name)
+		}
+	}
+
 	/* Använd fragment om det inte finns ett naturligt (semantiskt) element att lägga innehållet i: <> */
 	return (
-		<section>
+		<section className="animal-info">
 		<h2> Animal info </h2>
 		<ul className="list">
 			{animals.map(animal => (
+				/* Koden kan förenklas genom att flytta ut li-elementet till en egen komponent */
 				<li key={animal.id}>
-					<span>{animal.name}</span>
+					<span>{
+						editingAnimalId === animal.id
+							? <input type="text" placeholder="Animal name"
+								value={editingName}
+								onChange={event => setEditingName(event.target.value)} />
+							: animal.name
+					}</span>
+					<span onClick={() => editAnimal(animal)}>🖊️</span>
 					<span onClick={() => removeAnimal(animal.id)}>🗑️</span>
 				</li>
 			))}
 		</ul>
-		<div>
+		<div className="column">
 			<input type="text" placeholder="Animal name"
+				className={nameIsValid ? 'valid' : 'invalid'}
 				value={newAnimalName}
 				onChange={event => setNewAnimalName(event.target.value)}
 				/>
 			<input type="text" placeholder="Animal id"
+				className={idValidationClass}
 				value={newAnimalId}
 				onChange={event => setNewAnimalId(event.target.value)}
 				/>

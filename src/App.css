@@ -37,7 +37,7 @@ h1, h2 {
 .list > li > span:first-child {
 	flex-grow: 1;
 }
-.list > li > span:last-child:hover {
+.list > li > span:nth-child(2):hover, .list > li > span:last-child:hover {
 	cursor: pointer;
 	/* Tips! Använd transform: scale och transition för att göra så att papperskorgen växer */
 }

@@ -1,0 +1,31 @@
+.animal-info .column {
+	display: flex;
+	flex-direction: column;
+}
+
+.animal-info input {
+	font-size: 1.1em;
+	padding: 0.2em 0.5em;
+	margin: 0.2em;
+}
+
+.animal-info button {
+	padding: 0.5em 2em;
+	margin: 0.2em;
+	border-radius: 0.5em;
+}
+
+.animal-info .valid {
+	border: 2px solid green;
+}
+.animal-info .invalid {
+	border: 2px solid red;
+}
+/* .animal-info .invalid:focus {
+	border: 2px solid red;
+	outline: none;
+	border-radius: 2px;
+} */
+/* Extra övning: ta reda på vilken pseudoklass som används när ett element är aktivt (:active eller :focus)
+Titta också på "outline"
+*/
